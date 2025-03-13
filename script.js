@@ -5,6 +5,7 @@ const state = {
     pageLength:100
 }
 const navObj = document.getElementById("navObj")
+const navList = document.getElementById("navList")
 const blogPost = document.getElementById("blogPost")
 const loader = document.getElementById("loader")
 
@@ -48,6 +49,12 @@ navObj.onscrollend = (event)=>{
     console.log(navObj.scrollHeight - navObj.offsetHeight);
     if((navObj.scrollTop)-(navObj.scrollHeight - navObj.offsetHeight)<10){
         loadNav()
+        var lengthOfTree = navList.querySelectorAll('li').length
+
+        while (lengthOfTree > state.pageLength) {
+            navList.removeChild(navList.firstElementChild)
+            lengthOfTree = navList.querySelectorAll('li').length
+        }
     }
     
 }
@@ -57,13 +64,6 @@ async function loadPost(id){
     let userResponse = await (await fetch(`https://dummyjson.com/users/${blogResponse.userId}`)).json()
 
     renderPost(blogResponse,userResponse)
-
-    var lengthOfTree = navObj.querySelectorAll('li').length
-
-    while (lengthOfTree > state.pageLength) {
-        navObj.removeChild(navObj.firstElementChild)
-        lengthOfTree = navObj.querySelectorAll('li').length
-    }
 
 }
 
