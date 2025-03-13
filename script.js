@@ -2,7 +2,7 @@
 const state = {
     page:0,
     offset:20,
-    pageLength:100
+    pageLength:200
 }
 const navObj = document.getElementById("navObj")
 const navList = document.getElementById("navList")
@@ -39,10 +39,15 @@ async function loadNav(){
     state.page=state.page+1
     let jsonObj = await response.json()
     // console.log(jsonObj)
-    jsonObj.posts.forEach(element => {
-        var navelement = document.querySelector("#navList")
-        navelement.innerHTML += `<li style="padding: 5px;"><div class='blogItem' data-attr='${element.id}' onclick=loadPost(${element.id}) cursor> ${element.title} <div style="font-size:10px">views:${element.views}</div> </div></li>`
-      });
+    if(jsonObj.posts.length==0){
+        state.page=0
+    }else{
+        jsonObj.posts.forEach(element => {
+            var navelement = document.querySelector("#navList")
+            navelement.innerHTML += `<li style="padding: 5px;"><div class='blogItem' data-attr='${element.id}' onclick=loadPost(${element.id}) cursor> ${element.title} <div style="font-size:10px">views:${element.views}</div> </div></li>`
+          });
+    }
+   
 }
 navObj.onscrollend = (event)=>{
     console.log(navObj.scrollTop);
