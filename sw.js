@@ -1,15 +1,10 @@
 
+const tree = navObj.querySelectorAll('li')
+var lengthOfTree = tree.length
 
-
-while (navObj.querySelectorAll('li').length > state.pageLength) {
-    navObj.querySelectorAll('li').forEach((element) => {
-        if(navObj.querySelectorAll('li').length < state.pageLength){
-            return;
-        }else{
-            element.remove()
-        }
-        
-    })
+while (lengthOfTree > state.pageLength) {
+    tree.removeChild(tree.firstElementChild)
+    lengthOfTree = tree.length
 }
 
 
