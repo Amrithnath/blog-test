@@ -1,11 +1,5 @@
 
-const tree = navObj.querySelectorAll('li')
-var lengthOfTree = tree.length
 
-while (lengthOfTree > state.pageLength) {
-    tree.removeChild(tree.firstElementChild)
-    lengthOfTree = tree.length
-}
 
 
 console.log('Started', self);
@@ -19,3 +13,10 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('push', function(event) {
   console.log('Push message received', event);
 });
+// const tree = navObj.querySelectorAll('li')
+// var lengthOfTree = tree.length
+
+// while (lengthOfTree > state.pageLength) {
+//     tree.removeChild(tree.firstElementChild)
+//     lengthOfTree = tree.length
+// }
