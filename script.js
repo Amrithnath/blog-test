@@ -8,7 +8,22 @@ const navObj = document.getElementById("navObj")
 const navList = document.getElementById("navList")
 const blogPost = document.getElementById("blogPost")
 const loader = document.getElementById("loader")
-
+const registerServiceWorker = async () => {
+    if ("serviceWorker" in navigator) {
+        try {
+        const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/index.html" });
+        if (registration.installing) {
+            console.log("Service worker installing");
+        } else if (registration.waiting) {
+            console.log("Service worker installed");
+        } else if (registration.active) {
+            console.log("Service worker active");
+        }
+        } catch (error) {
+        console.error(`Registration failed with ${error}`);
+        }
+    }
+};
 
 
 window.onload = function(){
@@ -55,11 +70,8 @@ navObj.onscrollend = (event)=>{
     if((navObj.scrollTop)-(navObj.scrollHeight - navObj.offsetHeight)<10){
         loadNav()
         var lengthOfTree = navList.querySelectorAll('li').length
-
-        while (lengthOfTree > state.pageLength) {
-            navList.removeChild(navList.firstElementChild)
-            lengthOfTree = navList.querySelectorAll('li').length
-        }
+        var objectsToRemove = lengthOfTree - state.pageLength
+        registerServiceWorker.dispatchEvent('clean');
     }
     
 }
@@ -79,19 +91,3 @@ async function loadPost(id){
 // https://dummyjson.com/posts/1
 // https://dummyjson.com/posts?limit=20&skip=0&select=title,views,userId
 
-const registerServiceWorker = async () => {
-if ("serviceWorker" in navigator) {
-    try {
-    const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/index.html" });
-    if (registration.installing) {
-        console.log("Service worker installing");
-    } else if (registration.waiting) {
-        console.log("Service worker installed");
-    } else if (registration.active) {
-        console.log("Service worker active");
-    }
-    } catch (error) {
-    console.error(`Registration failed with ${error}`);
-    }
-}
-};
